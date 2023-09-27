@@ -58,4 +58,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    //Relación uno a uno
+    public function profile(){
+        // $profile = Profile::where('user_id',$this->id)->first();
+        // return $profile;
+        //return $this->hasOne(Profile::class,'foreign_key','local_key');
+
+        return $this->hasOne(Profile::class);
+    }
 }
