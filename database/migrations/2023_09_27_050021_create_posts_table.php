@@ -11,17 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title',45);
-            $table->text('biography');
-            $table->string('website', 45);
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->string('name');
+            $table->text('body');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
 
             $table->foreign('user_id')
                     ->references('id')->on('users')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
+                    ->onDelete('set null')
+                    ->onUpdate('set null');
+
+            $table->foreign('category_id')->references('id')->on('categories')
+                    ->onDelete('set null')
+                    ->onUpdate('set null');
 
             $table->string('user_register');
             $table->ipAddress('visitor');
@@ -36,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('posts');
     }
 };

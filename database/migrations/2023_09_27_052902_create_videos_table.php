@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->string('title',45);
-            $table->text('biography');
-            $table->string('website', 45);
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->string('name',45);
+            $table->text('description');
+            $table->string('url');
+
+            $table->unsignedBigInteger('user_id')->nullable();
 
             $table->foreign('user_id')
                     ->references('id')->on('users')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
+                    ->onDelete('set null');
 
-            $table->string('user_register');
-            $table->ipAddress('visitor');
+            $table->string('user_register')->default('admin');
+            $table->ipAddress('visitor')->default('127.0.0.1');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('videos');
     }
 };
