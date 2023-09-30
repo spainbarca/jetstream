@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Video extends Model
+class Comment extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -16,8 +16,8 @@ class Video extends Model
         return $this->belongsTo(User::class);
     }
 
-    //Relación uno a muchos polimorfica
-    public function comments(){
-        return $this->morphMany(Comment::class, 'commentable');
+    //Relación  polimorfica
+    public function commentable(){
+        return $this->morphTo();
     }
 }
